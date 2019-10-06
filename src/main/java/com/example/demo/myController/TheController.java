@@ -59,7 +59,7 @@ public class TheController {
             return "login";
         }
         else {
-            model.addAttribute("username",user.getUsername());
+            model.addAttribute("username",user1.getUsername());
             return "index";
         }
     }
