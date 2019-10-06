@@ -52,14 +52,16 @@ public class TheController {
 
     @RequestMapping("/doLogin")
     public String doLogin(User user,Model model){
+
         User user1 = userService.getUser(user.getEmail(), user.getPassword());
         System.out.println(user1);
-        if (user1 != null) {
+
+        if (user1 == null) {
             model.addAttribute("state","用户名或密码错误");
             return "login";
         }
         else {
-            model.addAttribute("username",user1.getUsername());
+            model.addAttribute("username",user.getUsername());
             return "index";
         }
     }

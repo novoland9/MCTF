@@ -11,7 +11,7 @@ public class UserService implements UserServiceInterface{
     UserDao userDao;
 
     public User getUser(String email, String password) {
-        return userDao.getByPasswordAndEmail(email,password);
+        return userDao.getByEmailAndPassword(email,password);
     }
 
     public void insertUser(User user) {
