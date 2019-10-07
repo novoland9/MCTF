@@ -1,4 +1,4 @@
-package com.example.demo.myController;
+package com.example.demo.Interceptor;
 
 
 import org.springframework.context.annotation.Configuration;

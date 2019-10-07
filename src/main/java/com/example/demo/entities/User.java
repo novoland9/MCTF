@@ -9,6 +9,24 @@ public class User {
     String username;
     String password;
     String email;
+    Integer point = 0;
+    String team;
+
+    public Integer getPoint() {
+        return point;
+    }
+
+    public void setPoint(Integer point) {
+        this.point = point;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
 
     public String getEmail() {
         return email;

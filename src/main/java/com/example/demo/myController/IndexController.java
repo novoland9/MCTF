@@ -11,8 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+
+// ---------------------------------------------------------------------
+//
+//   index主页、登陆、登出、注册页面
+//
+// ---------------------------------------------------------------------
+
 @Controller
-public class TheController {
+public class IndexController {
 
     @Autowired
     UserService userService;
