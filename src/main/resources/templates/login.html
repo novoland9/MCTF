@@ -59,7 +59,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="./login">Login</a> </li>
                 <li><a href="./register">Register</a> </li>
-                <li><a th:text="'用户ID：'"/></li>
+                <li th:if="${session.USER}"><a th:text="'用户ID：' + ${session.USER.username}"/></li>
+                <li th:if="${session.USER}"><a href="./doLogout">Logout</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

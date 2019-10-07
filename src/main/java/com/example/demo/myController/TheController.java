@@ -1,11 +1,14 @@
 package com.example.demo.myController;
 import com.example.demo.entities.User;
 import com.example.demo.service.UserService;
+import com.example.demo.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -14,6 +17,8 @@ public class TheController {
     @Autowired
     UserService userService;
 
+    // 主页
+    // ------------------------------------------------------------------
     @RequestMapping("/index")
     public String index(Model model) {
         model.addAttribute("username","未登录");
@@ -21,6 +26,7 @@ public class TheController {
     }
 
     // 注册
+    // -------------------------------------------------------------------
     @GetMapping("/register")
     public String register(){
         return "regist";
@@ -43,7 +49,8 @@ public class TheController {
     }
 
 
-    // 登陆
+    // 登录
+    // ------------------------------------------------------------------
     @RequestMapping("/login")
     public String login(Model model){
         model.addAttribute("state","");
@@ -51,7 +58,7 @@ public class TheController {
     }
 
     @RequestMapping("/doLogin")
-    public String doLogin(User user,Model model){
+    public String doLogin(User user, Model model, HttpServletRequest request){
 
         User user1 = userService.getUser(user.getEmail(), user.getPassword());
         System.out.println(user1);
@@ -61,8 +68,20 @@ public class TheController {
             return "login";
         }
         else {
-            model.addAttribute("username",user.getUsername());
+            request.getSession().setAttribute(UserUtil.USER_SESSION_KEY, user1);
             return "index";
         }
     }
+
+    // 登出
+    // ------------------------------------------------------------------
+    @RequestMapping("/doLogout")
+    public String doLogout(User user, Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.removeAttribute("USER");
+        session.invalidate();
+        return "login";
+    }
 }
+
+
