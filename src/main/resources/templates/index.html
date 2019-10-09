@@ -13,6 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+    <link href="./index.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -20,21 +21,6 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-<style>
-    body {
-        padding-top: 50px;
-    }
-    .starter-template {
-        padding: 40px 15px;
-        text-align: center;
-    }
-    .tbmx{
-        position: fixed;
-        bottom: 10px;
-        width: 100%;
-        text-align: center;
-    }
-</style>
 
 <body>
 <a name="Home" id="Home" > </a>
@@ -52,16 +38,25 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li class="active" href="./index"><a>Home</a></li>
-                <li><a href="/Problem">Problem</a></li>
+                <li><a href="./Problem">Problem</a></li>
                 <li><a href="/Ranklist">Ranklist</a></li>
                 <li><a href="/Writeup">Writeup</a></li>
                 <li><a href="/Notice">Notice</a> </li>
+                <li th:if="${session.USER}" class="dropdown" style="cursor: pointer">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">team<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li type="button"  data-toggle="modal" data-target="#create"><a>create</a></li>
+                        <li type="button"  data-toggle="modal" data-target="#join"><a>join</a></li>
+                        <li type="button"  data-toggle="modal" data-target="#quit"><a>quit</a></li>
+                        <li type="button"  data-toggle="modal" data-target="#dismiss"><a>dismiss</a></li>
+                    </ul>
+                </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="./login">Login</a> </li>
-                <li><a href="./register">Register</a> </li>
+                <li th:if="${not session.USER}"><a href="./login">Login</a> </li>
+                <li th:if="${not session.USER}"><a href="./register">Register</a> </li>
                 <li th:if="${session.USER}"><a th:text="'用户ID：' + ${session.USER.username}"/></li>
-                <li th:if="${session.USER}"><a href="./doLogout">Logout</a></li>
+                <li th:if="${session.USER}"  type="button"  data-toggle="modal" data-target="#logout"><a>Logout</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
@@ -69,10 +64,115 @@
 
 <div class="container">
 
-    <div class="starter-template">
-        <h1>Welcome to MCTF</h1>
-        <h2>wo ye bu zhi dao shuo dian sha<br> sui bian da liang hang ba<br>zui di xia hai you zi<br></h2>
+    <div class="starter-templateindex">
+        <h1>Welcome to </h1>
     </div>
+    <div class="rotate-font">
+        <h1><b>Mctf</b></h1>
+    </div>
+    <div class="starter-template0">
+        <h2>wo ye bu zhi dao shuo dian sha<br> sui bian da liang hang ba <br>zui di xia hai you zi</h2>
+    </div>
+
+    <!--    logout-->
+    <div class="modal fade" id="logout" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Are you sure you want to logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a href="./doLogout"><button type="button" class="btn btn-primary">Sure</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    create-->
+    <div class="modal fade" id="create" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 style="text-align:center">CREATE TEAM</h2>
+                    <form action="/doCreate" method="post" >
+                        <div class="form-group" th:if="${not session.USER.inTeam}">
+                            <label for="teamname">Team name</label>
+                            <input class="form-control" id="teamname" placeholder="Team name" name="teamname">
+                        </div>
+                        <h4 th:if="${session.USER.inTeam}"><a th:text="'Your already in team：' + ${session.TEAM.getTeamName()}"/></h4>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button th:if="${session.USER.inTeam}" type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    join-->
+    <div class="modal fade" id="join" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 style="text-align:center">JOIN TEAM</h2>
+                    <form action="/doJoin" method="post">
+                        <div class="form-group" th:if="${not session.USER.inTeam}">
+                            <label for="teamname2">Team name</label>
+                            <input class="form-control" id="teamname2" placeholder="Team name" name="teamname2">
+                        </div>
+                        <h4 th:if="${session.USER.inTeam}"><a th:text="'Your already in team：' + ${session.USER.teamname}"/></h4>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button th:if="${session.USER.inTeam}" type="submit" class="btn btn-primary">Join</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    quit-->
+    <div class="modal fade" id="quit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h2 style="text-align:center">QUIT TEAM</h2>
+                    <h4><a th:text="'Your team：' + ${session.TEAM.getTeamName()}"/></h4>
+                    <h4 th:if="${session.USER.inTeam}">Are you sure you want to quit your team?</h4>
+                    <h4 th:if="${not session.USER.inTeam}">You haven't join a team.</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a href="./doQuit" th:if="${session.USER.inTeam}"><button type="button" class="btn btn-primary">Quit</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    dismiss-->
+    <div class="modal fade" id="dismiss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <h2 style="text-align:center">DISMISS TEAM</h2>
+                <div class="modal-body" th:if="${session.USER.inTeam}">
+                    <h4><a th:text="'Your team：' + ${session.TEAM.getTeamName()}"/></h4>
+                    <h4 th:if="${session.USER.isTeamLeader}">Are you sure you want to DISMISS your team?</h4>
+                    <h4 th:if="${not session.USER.isTeamLeader}">Only the team leader can dismiss it.</h4>
+                </div>
+                <div class="modal-body" th:if="${not session.USER.inTeam}">
+                    <h2 style="text-align:center">DISMISS TEAM</h2>
+                    <h4>You don't have a team.</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a href="./doDismiss" th:if="${session.USER.isTeamLeader}" ><button type="button" class="btn btn-primary">DisMiss</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div><!-- /.container -->
 <!--<div style="position:fixed; bottom:0px; width:100%; text-align:center;">感谢百度与搜狗和谷歌的大力支持</div>-->
 <div class="tbmx">

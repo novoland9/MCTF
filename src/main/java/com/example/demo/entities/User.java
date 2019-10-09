@@ -1,7 +1,6 @@
 package com.example.demo.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -10,7 +9,40 @@ public class User {
     String password;
     String email;
     Integer point = 0;
-    String team;
+    @GeneratedValue
+    Integer userId;
+
+
+    @ManyToOne
+    @JoinColumn(name = "teamId")
+    Team team;
+
+    Boolean inTeam;
+    Boolean isTeamLeader;
+
+    public Boolean getInTeam() {
+        return inTeam;
+    }
+
+    public void setInTeam(Boolean inTeam) {
+        this.inTeam = inTeam;
+    }
+
+    public Boolean getIsTeamLeader() {
+        return isTeamLeader;
+    }
+
+    public void setIsTeamLeader(Boolean teamLeader) {
+        isTeamLeader = teamLeader;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
     public Integer getPoint() {
         return point;
@@ -20,11 +52,11 @@ public class User {
         this.point = point;
     }
 
-    public String getTeam() {
+    public Team getTeam() {
         return team;
     }
 
-    public void setTeam(String team) {
+    public void setTeam(Team team) {
         this.team = team;
     }
 

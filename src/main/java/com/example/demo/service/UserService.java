@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dao.UserDao;
+import com.example.demo.entities.Team;
 import com.example.demo.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,19 @@ public class UserService implements UserServiceInterface{
             return true;
         else
             return false;
+    }
+
+    @Override
+    public void leaveTeam(User user) {
+        user.setIsTeamLeader(false);
+        user.setInTeam(false);
+        user.setTeam(null);
+    }
+
+    @Override
+    public void joinTeam(User user, Team team) {
+        user.setTeam(team);
+        user.setInTeam(true);
+        user.setIsTeamLeader(false);
     }
 }

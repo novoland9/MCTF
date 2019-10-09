@@ -1,6 +1,9 @@
 package com.example.demo.myController;
+import com.example.demo.entities.Team;
 import com.example.demo.entities.User;
+import com.example.demo.service.TeamService;
 import com.example.demo.service.UserService;
+import com.example.demo.util.TeamUtil;
 import com.example.demo.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +26,9 @@ public class IndexController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    TeamService teamService;
 
     // 主页
     // ------------------------------------------------------------------
@@ -51,6 +57,9 @@ public class IndexController {
             model.addAttribute("registerState", "邮箱已被注册");
             return "regist";
         }
+
+        user.setInTeam(false);
+        user.setIsTeamLeader(false);
         userService.insertUser(user);
         return "login";
     }
@@ -76,6 +85,10 @@ public class IndexController {
         }
         else {
             request.getSession().setAttribute(UserUtil.USER_SESSION_KEY, user1);
+            if (user1.getInTeam())
+                request.getSession().setAttribute(TeamUtil.TEAM_SESSION_KEY, user1.getTeam());
+            else
+                request.getSession().setAttribute(TeamUtil.TEAM_SESSION_KEY, null);
             return "index";
         }
     }
@@ -86,6 +99,7 @@ public class IndexController {
     public String doLogout(User user, Model model, HttpServletRequest request){
         HttpSession session = request.getSession();
         session.removeAttribute("USER");
+        session.removeAttribute("TEAM");
         session.invalidate();
         return "login";
     }

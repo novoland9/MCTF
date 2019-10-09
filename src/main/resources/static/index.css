@@ -1,0 +1,61 @@
+body {
+    padding-top: 80px;
+    background: -moz-linear-gradient(left top, rgba(225,225,225,10), rgba(196,196,196,10));
+    background: -webkit-linear-gradient(left top, rgba(225,225,225,10), rgba(196,196,196,10));
+}
+.starter-templateindex {
+    width: 54%;
+    font-size: 2.8em;
+    text-align: right;
+    font-family: "Comic Sans MS";
+    float: left;
+    padding: 0px 10px;
+}
+.starter-template0 {
+    width: 100%;
+    text-align: center;
+    font-family: "Comic Sans MS";
+    float: left;
+    padding: 10px;
+}
+.rotate-font{
+    float: left;
+    font-family: "Comic Sans MS";
+    font-size: 2.8em;
+    width: auto;
+    text-align: left;
+    padding: 0px 10px;
+    background-color: rgba(255,255,255,0);
+    -webkit-transition: width 2s, height 2s, -webkit-transform 2s;
+    transition: width 2s, height 2s, transform 2s;
+}
+.rotate-font:hover{
+    font-family: "Comic Sans MS";
+    background-color: rgba(255,255,255,0);
+    padding: 0px 10px;
+    font-size: 2.8em;
+    float: left;
+    width: auto;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+.blank{
+    width: 100%;
+    pading: 0px 10px;
+    font-size: 1.8em;
+    float: left;
+}
+.tbmx{
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-family: "Microsoft YaHei UI";
+}
+.centerwindowsbase{
+    position: fixed;
+
+}
+.centerwindows{
+
+}

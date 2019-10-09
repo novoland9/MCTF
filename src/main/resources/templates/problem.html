@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -7,24 +8,39 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Login</title>
+    <title>Problem</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="./index.css" rel="stylesheet" type="text/css">
-
+    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 </head>
+<style>
+    body {
+        padding-top: 50px;
+    }
+    .starter-template {
+        padding: 40px 15px;
+        text-align: center;
+    }
+    .tbmx{
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        text-align: center;
+    }
+</style>
 
 <body>
-<a name="Login" id="Login" > </a>
+<a name="Home" id="Home" > </a>
 <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container"><a name="btn" id="btn" > </a>
+    <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
@@ -36,8 +52,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="./index">Home</a></li>
-                <li><a href="./Problem">Problem</a></li>
+                <li href="./index"><a>Home</a></li>
+                <li class="active" ><a href="./Problem">Problem</a></li>
                 <li><a href="/Ranklist">Ranklist</a></li>
                 <li><a href="/Writeup">Writeup</a></li>
                 <li><a href="/Notice">Notice</a> </li>
@@ -52,7 +68,7 @@
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="active" th:if="${not session.USER}"><a href="./login">Login</a> </li>
+                <li th:if="${not session.USER}"><a href="./login">Login</a> </li>
                 <li th:if="${not session.USER}"><a href="./register">Register</a> </li>
                 <li th:if="${session.USER}"><a th:text="'用户ID：' + ${session.USER.username}"/></li>
                 <li th:if="${session.USER}"  type="button"  data-toggle="modal" data-target="#logout"><a>Logout</a></li>
@@ -60,17 +76,11 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+
 <div class="container">
-    <div class="blank">
-        <div class="starter-templateindex">
-            <h1>Welcome to</h1>
-        </div>
-        <div class="rotate-font">
-            <h1><b>Mctf</b></h1>
-        </div>
-        <div class="blank">
-            <h1>   </h1>
-        </div>
+
+    <div class="starter-template">
+        <h1>Welcome to MCTF</h1>
     </div>
 
     <!--    logout-->
@@ -136,8 +146,8 @@
     <div class="modal fade" id="quit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <h2 style="text-align:center">QUIT TEAM</h2>
                 <div class="modal-body">
-                    <h2 style="text-align:center">QUIT TEAM</h2>
                     <h4><a th:text="'Your team：' + ${session.USER.teamname}"/></h4>
                     <h4 th:if="${session.USER.inTeam}">Are you sure you want to quit your team?</h4>
                     <h4 th:if="${not session.USER.inTeam}">You haven't join a team.</h4>
@@ -154,8 +164,8 @@
     <div class="modal fade" id="dismiss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <h2 style="text-align:center">DISMISS TEAM</h2>
                 <div class="modal-body" th:if="${session.USER.inTeam}">
+                    <h2 style="text-align:center">DISMISS TEAM</h2>
                     <h4><a th:text="'Your team：' + ${session.USER.teamname}"/></h4>
                     <h4 th:if="${session.USER.isTeamLeader}">Are you sure you want to DISMISS your team?</h4>
                     <h4 th:if="${not session.USER.isTeamLeader}">Only the team leader can dismiss it.</h4>
@@ -172,28 +182,88 @@
         </div>
     </div>
 
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        WEB
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <div id="WEB1" class="col-md-3 d-inline-block ">
+                        <button class="btn btn-dark" ><p>web  1</p>
+                            <span>100</span>
+                        </button>
+                    </div>
+                    <div id="WEB2" class="col-md-3 d-inline-block ">
+                        <button class="btn btn-default" ><p>web  2</p>
+                            <span>100</span>
+                        </button>
+                    </div>
+                    <div id="WEB3" class="col-md-3 d-inline-block ">
+                        <button class="btn btn-secondary" ><p>web  3</p>
+                            <span>100</span>
+                        </button>
+                    </div>
+                    <div id="WEB4" class="col-md-3 d-inline-block ">
+                        <button class="btn btn-danger" ><p>web  4</p>
+                            <span>100</span>
+                        </button>
+                    </div>
+                    <div id="WEB5" class="col-md-3 d-inline-block ">
+                        <button class="btn btn-primary" ><p>web  5</p>
+                            <span>100</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        PWN
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    这啥都没有
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        REVERSE
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    这里还是啥都没有
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <form action="/doLogin" method="post">
-        <div class="form-group" >
-            <label for="username">User</label>
-            <input type="email" class="form-control" id="username" placeholder="E-mail address" name="email">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-        </div>
-        <button type="submit" class="btn btn-default">Login</button>
-    </form>
-    <p th:text="${state}"></p>
-</div>
+</div><!-- /.container -->
+<!--<div style="position:fixed; bottom:0px; width:100%; text-align:center;">感谢百度与搜狗和谷歌的大力支持</div>-->
 <div class="tbmx">
     <h6>感谢百度与搜狗和谷歌的大力支持</h6>
 </div>
+
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" th:src="@{/js/jquery-1.11.2.min.js}"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 </body>
 </html>

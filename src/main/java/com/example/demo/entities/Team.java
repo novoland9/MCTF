@@ -1,17 +1,38 @@
 package com.example.demo.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Team {
     @Id
     String teamName;
     User teamLeader;
-    List<User> teamMember;
     Integer totalPoint;
+    @GeneratedValue
+    Integer teamId;
+
+
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    Set<User> users;
+
+    public Integer getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Integer teamId) {
+        this.teamId = teamId;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
 
     public String getTeamName() {
         return teamName;
@@ -27,14 +48,6 @@ public class Team {
 
     public void setTeamLeader(User teamLeader) {
         this.teamLeader = teamLeader;
-    }
-
-    public List<User> getTeamMember() {
-        return teamMember;
-    }
-
-    public void setTeamMember(List<User> teamMember) {
-        this.teamMember = teamMember;
     }
 
     public Integer getTotalPoint() {
